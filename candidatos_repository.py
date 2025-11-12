@@ -98,13 +98,15 @@ def update_candidatos(
             data[i]["resumo"]              = resumo              if resumo != None              else data[i]["resumo"]
             data[i]["localizacao"]         = localizacao         if localizacao != None         else data[i]["localizacao"]
             data[i]["area"]                = area                if area != None                else data[i]["area"]
-            data[i]["habilidade_tecnicas"] = habilidade_tecnicas if habilidade_tecnicas != None else data[i]["habilidade_tecnicas"]
+            data[i]["habilidade_tecnicas"] = habilidade_tecnicas if habilidade_tecnicas != None else data[i]["habilidades_tecnicas"]
             data[i]["soft_skills"]         = soft_skills         if soft_skills != None         else data[i]["soft_skills"]
-            data[i]["experiences"]         = experiencias        if experiencias != None        else data[i]["experiencias"]
+            data[i]["experiencias"]        = experiencias        if experiencias != None        else data[i]["experiencias"]
             data[i]["formacao"]            = formacao            if formacao != None            else data[i]["formacao"]
             data[i]["projetos"]            = projetos            if projetos != None            else data[i]["projetos"]
             data[i]["certificacoes"]       = certificacoes       if certificacoes != None       else data[i]["certificacoes"]
             data[i]["idiomas"]             = idiomas             if idiomas != None             else data[i]["idiomas"]
             data[i]["area_interesses"]     = area_interesses     if area_interesses != None     else data[i]["soft_skills"]
+            with open("candidatos.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
             return 1
     return -1

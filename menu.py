@@ -12,14 +12,15 @@ def logo_app():
   / ____ \ |_| | || (_) | |  ____) |
  /_/    \_\__,_|\__\___/|_| |_____/ 
                                     
-                Bem-vindo!               
+  O seu amigo, para todas as vagas!               
           """)
     print("-"*bar_size)
     print()
 
-def input_program():
+def input_int_program(text):
     try:
-        return int(input("Selecione qual opção você deseja usar: "))
+        value = int(input(text))
+        return value
     except ValueError:
         return None
 
@@ -35,7 +36,6 @@ def options_main_menu():
     Menu com opções disponiveis no programa.
     """
     print("1 - Gerenciar Candidatos.")
-    #Ver resumos
     #Definir empresa
     #Definir processo seletivo
     #Usar IA
