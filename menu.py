@@ -36,11 +36,9 @@ def options_main_menu():
     Menu com opções disponiveis no programa.
     """
     print("1 - Gerenciar Candidatos.")
-    #Definir empresa
-    #Definir processo seletivo
-    #Usar IA
+    print("2 - Gerenciar Parâmetros de Vaga.")
+    print("3 - Processo de análise de vagas para candidatos (AI).")
     #Ver Historico da IA
-    #Exportar Arquivo resumido de resultados que eu quiser da opção de cima
     print("0 - Fechar aplicativo.")
 
 def options_candidatos_menu():
@@ -48,8 +46,17 @@ def options_candidatos_menu():
     Menu com opções para gerenciar candidatos.
     """
     print("1 - Ver lista de candidatos registrados.")
-    print("2 - Ver candidado detalhado por ID")
+    print("2 - Ver candidado detalhado por ID.")
     print("3 - Registrar um candidato.")
     print("4 - Atualizar um candidato.")
     print("5 - Deletar um candidato.")
     print("0 - Voltar ao menu principal.")
+
+def options_empresa_vagas_menu():
+    print("1 - Ler Dados e Ramos Empresariais.")
+    print("2 - Definir Dados e Ramos Empresariais.")
+    print("3 - Ver Padrões de Vaga em aberto.")
+    print("4 - Criar Padrão de Vaga.")
+    print("5 - Atualizar Padrão de Vaga.")
+    print("6 - Deletar Padrão de Vaga.")
+    print("0 - Voltar ao menu Principal. ")

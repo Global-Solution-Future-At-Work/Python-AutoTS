@@ -1,7 +1,12 @@
 import menu
 import candidatos_repository as cr
+import empresa_repository as er
+import vagas_repository as vr
 
 def candidatos_menu():
+    """
+    Interface de console no módulo de candidatos.
+    """
     cr.verify_candidatos_file()
     while True:
         menu.options_candidatos_menu()
@@ -464,7 +469,7 @@ def candidatos_menu():
                             area_interesses        
                         )
             case 5:
-                person_id = menu.input_int_program("Selecione o ID do candidato que deletar: ")
+                person_id = menu.input_int_program("Selecione o ID do candidato que deseja deletar: ")
                 if person_id == None:
                     print("Insira um valor válido para o ID.")
                 else:
@@ -498,6 +503,98 @@ def candidatos_menu():
                 print("\nOpção inválida. Escolha uma das opções disponíveis")
         print()
 
+def empresa_vagas_menu():
+    """
+    Interface de console no módulo de empresa e vagas.
+    """
+    er.verify_empresa_file()
+    vr.verify_vagas_file()
+    while True:
+        menu.options_empresa_vagas_menu()
+        option = menu.input_int_program("Selecione qual opção você deseja usar: ")
+        match option:
+            case 1:
+                print("\nInformações da empresa:")
+                for key, value in er.read_empresa().items():
+                    print(f"{key}: {value}")
+                print()
+            case 2:
+                nome = input("\nInsira o nome da empresa: ")
+                descricao = input("Insira a descrição da empresa: ")
+                er.create_empresa(nome, descricao)
+                print("Definido com sucesso!")
+            case 3:
+                print("\nVagas em aberto no sistema: ")
+                print("====================================")
+                for i in vr.read_vagas():
+                    for key, value, in i.items():
+                        print(f"{key}: {value}")
+                    print("====================================")
+            case 4:
+                id = menu.input_int_program("Insira um ID para a vaga: ")
+                if id == None:
+                    print("ID inválido. Tente novamente.\n")
+                    continue
+                is_valid_id = True
+                for i in vr.read_vagas():
+                    if i["id"] == id:
+                        is_valid_id = False
+                        print("ID existente, não pode ter duplicidade. Tente novamente com outro ID.\n")
+                if not is_valid_id:
+                    continue
+                
+                descricao = input("\nDescreva a vaga e seus requisitos:\n")
+                qtnd = 0
+                while True:
+                    qtnd = menu.input_int_program("\nInsira a quantidade de vagas que devem ser preenchidas: ")
+                    if qtnd != None:
+                        break
+
+                vr.create_vagas(id, descricao, qtnd)
+            case 5:
+                role_id = menu.input_int_program("Selecione o ID da vaga que deseja atualizar: ")
+                if role_id == None:
+                    print("Insira um valor válido para o ID.")
+                else:
+                    vaga = vr.read_vagas_by_id(role_id)
+                    if vaga == -1:
+                        print("Candidato não achado.")
+                    else:
+                        descricao = input(f"Atual: {vaga["descricao_requisitos"]} -> Insira uma descricao de requisitos para atualizar. Aperte ENTER sem digitar para não atualizar: \n")
+                        descricao = None if descricao == "" else descricao
+                        qtnd = input(f"Atual: {vaga["quantidade_vagas"]} -> Insira uma quantidade de vagas para atualizar. Aperte ENTER sem digitar para não atualizar: ")
+                        qtnd = None if qtnd == "" else qtnd
+
+                        vr.update_candidatos(role_id, descricao, qtnd)
+            case 6:
+                role_id = menu.input_int_program("Selecione o ID da vaga que deseja deletar: ")
+                if role_id == None:
+                    print("Insira um valor válido para o ID.")
+                else:
+                    vaga = vr.read_vagas_by_id(role_id)
+                    if vaga == -1:
+                        print("Vaga não achada.")
+                    else:  
+                        role_data = vr.read_vagas_by_id(role_id)
+                        print(f"ID: {role_data["id"]}")
+                        print(f"DESCRIÇÃO_REQUISITO: {role_data["descricao_requisitos"]}")
+                        print(f"QUANTIDADE DE VAGAS: {role_data["quantidade_vagas"]}")
+                        print("===============================")
+                        print("\nTem certeza que deseja deletar essa vaga? Digite 'SIM' para confirmar.")
+                        conf = input("")
+                        if conf == "SIM":
+                            print("Deletando...")
+                            vr.delete_vagas(role_id)
+                            print("Deletado!")
+                        else:
+                            print("Cancelado!")  
+            case 0:
+                menu.cls_terminal()
+                break
+            case _:
+                print("\nOpção inválida. Escolha uma das opções disponíveis")
+        print()
+                
 
 while True:
     menu.logo_app()
@@ -507,6 +604,10 @@ while True:
         case 1:
             menu.cls_terminal()
             candidatos_menu()
+            menu.cls_terminal()
+        case 2:
+            menu.cls_terminal()
+            empresa_vagas_menu()
             menu.cls_terminal()
         case 0:
             print("Saindo do programa...")

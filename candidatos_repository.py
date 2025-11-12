@@ -4,15 +4,24 @@ import json
 _filename = "candidatos.json"
 
 def verify_candidatos_file():
+    """
+    Verifica se o JSON de candidatos está criado para funcionamento do aplicativo.
+    """
     if not os.path.exists(_filename):
         with open(_filename, "w", encoding="utf-8") as f:
             json.dump([], f, ensure_ascii=False)
 
 def read_candidatos() -> list:
+    """
+    Traz todos os candidatos registrados no sistema de forma resumida.
+    """
     with open(_filename, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def read_candidatos_by_id(id: int) -> dict | int:
+    """
+    Traz o candidato registrado pelo ID registrado no sistema de forma detalhada.
+    """
     with open(_filename, "r", encoding="utf-8") as f:
         for i in json.load(f):
             if i["id"] == id:
@@ -36,6 +45,9 @@ def create_candidatos(
         idiomas: list[dict],
         area_interesses: list[str]
         ) -> int:
+    """
+    Cria uma entrada de candidato dentro do arquivo JSON.
+    """
     data = read_candidatos()
     data.append({
         "id": id,
@@ -59,6 +71,10 @@ def create_candidatos(
     return 1
 
 def delete_candidatos(id: int) -> int:
+    """
+    Deleta a entrada de um candidato ao receber o seu respectivo ID.
+    Caso o ID seja inexistente ou inválido, retorna -1
+    """
     data = read_candidatos()
     index = None
     for i in range(len(data)):
@@ -89,6 +105,10 @@ def update_candidatos(
         idiomas: list[dict] = None,
         area_interesses: list[str] = None
         ) -> int:
+    """
+    Atualiza o registro de um candidato registrado no sistema.
+    Caso o ID seja inexistente ou inválido, retorna -1
+    """
     data = read_candidatos()
     for i in range(len(data)):
         if data[i]["id"] == id:
@@ -106,7 +126,7 @@ def update_candidatos(
             data[i]["certificacoes"]       = certificacoes       if certificacoes != None       else data[i]["certificacoes"]
             data[i]["idiomas"]             = idiomas             if idiomas != None             else data[i]["idiomas"]
             data[i]["area_interesses"]     = area_interesses     if area_interesses != None     else data[i]["soft_skills"]
-            with open("candidatos.json", "w", encoding="utf-8") as f:
+            with open(_filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
             return 1
     return -1
