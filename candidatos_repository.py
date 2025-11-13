@@ -1,7 +1,7 @@
 import os
 import json
 
-_filename = "candidatos.json"
+_filename = "data/candidatos.json"
 
 def verify_candidatos_file():
     """

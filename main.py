@@ -4,7 +4,7 @@ import empresa_repository as er
 import vagas_repository as vr
 import historico_repository as hr
 from gemini_service import send_gemini_process as g_process
-
+from data_service import verify_data_dir as dir
 
 def candidatos_menu():
     """
@@ -603,8 +603,23 @@ def analise_ia_menu():
     Interface de console no módulo de análise por IA.
     """
     hr.verify_historico_file()
+    er.verify_empresa_file()
+    cr.verify_candidatos_file()
+    vr.verify_vagas_file()
     option = input("\nDeseja começar o processamento agora? Digite 'SIM' para confirmar: ")
     if option != "SIM":
+        return
+    
+    empresa_data = er.read_empresa()
+    candidatos_data = cr.read_candidatos()
+
+    if len(candidatos_data) == 0:
+        print("\nÉ necessário ter pelo menos 1 candidato registrado para começar a análisa...")
+        input("Aperte ENTER para voltar a tela inicial...")
+        return
+    elif empresa_data["nome"] == None or empresa_data["descricao"] == None:
+        print("\nÉ necessário ter definido o ramo empresarial em 'Gerenciar Parâmetros de Vaga' nas configurações para começar a análisa...")
+        input("Aperte ENTER para voltar a tela inicial...")
         return
     
     print("\nO processo necessita de uma vaga selecionada. Após selecionar, a IA ira fazer uma\nanálise completa na base de dados, trazendo os melhores candidatos baseado\nem suas experiências, habilidades e projetos desenvolvidos de forma imparcial e justa.")
@@ -628,9 +643,6 @@ def analise_ia_menu():
         input("Cancelado operação. Aperte ENTER para continuar...")
         return
     
-    empresa_data = er.read_empresa()
-    candidatos_data = cr.read_candidatos()
-
     resultado_analise = g_process(empresa_data, vaga_data, candidatos_data)
     print(f"Candidatos Selecionados: {resultado_analise["candidatos_selecionados"]}\nResumo Análise:\n{resultado_analise["resumo_analise"]}")
     
@@ -650,6 +662,7 @@ def analise_ia_menu():
                 print("\nID já existente, selecione um valor único para evitar duplicidade.\n")
             else:
                 resultado_analise["id"] = id_historico
+                resultado_analise["descricao_requisitos"] = vaga_data["descricao_requisitos"]
                 break
         hr.create_historico(resultado_analise)
         print("Salvo!\n")
@@ -717,6 +730,7 @@ def historico_ia_menu():
         print()
 
 while True:
+    dir()
     menu.logo_app()
     menu.options_main_menu()
     option = menu.input_int_program("Selecione qual opção você deseja usar: ")

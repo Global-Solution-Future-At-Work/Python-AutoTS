@@ -1,7 +1,7 @@
 import os
 import json
 
-_filename = "vagas.json"
+_filename = "data/vagas.json"
 
 def verify_vagas_file():
     """

@@ -6,6 +6,7 @@ candidatos.json
 empresa.json
 vagas.json
 historico_resultados.json
+data
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

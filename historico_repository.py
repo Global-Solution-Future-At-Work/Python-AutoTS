@@ -1,7 +1,7 @@
 import os
 import json
 
-_filename = "historico_resultados.json"
+_filename = "data/historico_resultados.json"
 
 def verify_historico_file():
     """

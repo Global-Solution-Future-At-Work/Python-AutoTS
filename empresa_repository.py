@@ -1,7 +1,7 @@
 import os
 import json
 
-_filename = "empresa.json"
+_filename = "data/empresa.json"
 
 def verify_empresa_file():
     """
