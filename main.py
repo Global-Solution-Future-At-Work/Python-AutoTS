@@ -2,6 +2,9 @@ import menu
 import candidatos_repository as cr
 import empresa_repository as er
 import vagas_repository as vr
+import historico_repository as hr
+from gemini_service import send_gemini_process as g_process
+
 
 def candidatos_menu():
     """
@@ -594,7 +597,124 @@ def empresa_vagas_menu():
             case _:
                 print("\nOpção inválida. Escolha uma das opções disponíveis")
         print()
-                
+
+def analise_ia_menu():
+    """
+    Interface de console no módulo de análise por IA.
+    """
+    hr.verify_historico_file()
+    option = input("\nDeseja começar o processamento agora? Digite 'SIM' para confirmar: ")
+    if option != "SIM":
+        return
+    
+    print("\nO processo necessita de uma vaga selecionada. Após selecionar, a IA ira fazer uma\nanálise completa na base de dados, trazendo os melhores candidatos baseado\nem suas experiências, habilidades e projetos desenvolvidos de forma imparcial e justa.")
+    vaga_id = menu.input_int_program("Selecione a vaga pelo ID: ")
+    if vaga_id == None:
+        print("\nVaga com ID inválido, selecione um valor válido para ID.\n")
+        input("Aperte ENTER para voltar a tela inicial...")
+        return
+    
+    vaga_data = vr.read_vagas_by_id(vaga_id)
+    if vaga_data == -1:
+        print("\nID inexistente, veja as vagas em aberto e selecione o ID correto para fazer a análise.\n")
+        input("Aperte ENTER para voltar a tela inicial...")
+        return
+
+    print("\nVerifique se as informações estão corretas:")
+    print(f"Descrição e requisitos da vaga:\n{vaga_data["descricao_requisitos"]}")
+    print(f"Quantidade de vagas a preencher: {vaga_data["quantidade_vagas"]}")
+    confirma_exec = input("Deseja continuar? Ao digitar 'SIM' a IA ira começar a análisar a base de dados: ")
+    if confirma_exec != 'SIM':
+        input("Cancelado operação. Aperte ENTER para continuar...")
+        return
+    
+    empresa_data = er.read_empresa()
+    candidatos_data = cr.read_candidatos()
+
+    resultado_analise = g_process(empresa_data, vaga_data, candidatos_data)
+    print(f"Candidatos Selecionados: {resultado_analise["candidatos_selecionados"]}\nResumo Análise:\n{resultado_analise["resumo_analise"]}")
+    
+    salvar_resultado = input("\nDeseja salvar o resultado? Digite 'SIM' para salvar: ")
+    if salvar_resultado == "SIM":
+        print("Salvando...")
+        while True:
+            valor_repetido = False
+            id_historico = menu.input_int_program("\nInsira um ID para salvar no Histórico: ")
+            if id_historico == None:
+                print("ID inválido, selecione um valor válido para salvar como ID.")
+                continue
+            for i in hr.read_historico():
+                if i["id"] == id_historico:
+                    valor_repetido = True
+            if valor_repetido == True:
+                print("\nID já existente, selecione um valor único para evitar duplicidade.\n")
+            else:
+                resultado_analise["id"] = id_historico
+                break
+        hr.create_historico(resultado_analise)
+        print("Salvo!\n")
+
+    deletar_vaga_cand = input("Deseja deletar a vaga e os candidatos selecionados? Digite 'SIM' para confirmar (NÃO TEM COMO DESFAZER ESSA DECISÃO!): ")
+    if deletar_vaga_cand == "SIM":
+        print("Deletando...")
+        for i in resultado_analise["candidatos_selecionados"]:
+            cr.delete_candidatos(i)
+            vr.delete_vagas(vaga_id)
+        print("Deletado!\n")
+    input("Aperte ENTER para voltar ao menu principal...")
+
+def historico_ia_menu():
+    """
+    Interface de console no módulo de histórico da IA.
+    """
+    hr.verify_historico_file()
+    while True:
+        menu.options_historico_menu()
+        option = menu.input_int_program("Selecione qual opção você deseja usar: ")
+        match option:
+            case 1:
+                print("\nLista de resultados anteriores:")
+                print("===============================")
+                for i in hr.read_historico():
+                    cand_selecionados = ""
+                    for j in i["candidatos_selecionados"]:
+                        cand_selecionados += f"{j}; "
+                    print(f"ID: {i["id"]}")
+                    print(f"CANDIDATOS SELECIONADOS: {cand_selecionados}")
+                    print(f"RESUMO DA ANÁLISE:\n{i["resumo_analise"]}")
+                    print("===============================")
+            case 2:
+                historic_id = menu.input_int_program("Selecione o ID do histórico que deseja deletar: ")
+                if historic_id == None:
+                    print("Insira um valor válido para o ID.")
+                else:
+                    historico = hr.read_historico_by_id(historic_id)
+                    if historico == -1:
+                        print("Histórico não achado.")
+                    else:  
+                        historic_data = hr.read_historico_by_id(historic_id)
+                        cand_selecionados = ""
+                        for i in historic_data["candidatos_selecionados"]:
+                            cand_selecionados += f"{i}; "
+                        print("===============================")
+                        print(f"ID: {historic_data["id"]}")
+                        print(f"CANDIDATOS SELECIONADOS: {cand_selecionados}")
+                        print(f"RESUMO DA ANÁLISE:\n{historic_data["resumo_analise"]}")
+                        print("===============================")
+                        print("\nTem certeza que deseja deletar esse histórico? Digite 'SIM' para confirmar.")
+                        conf = input("")
+                        if conf == "SIM":
+                            print("Deletando...")
+                            hr.delete_historico(historic_id)
+                            print("Deletado!")
+                        else:
+                            print("Cancelado!")  
+            case 0:
+                menu.cls_terminal()
+                break
+            case _:
+                print("\nOpção inválida. Escolha uma das opções disponíveis")
+        print()
 
 while True:
     menu.logo_app()
@@ -609,9 +729,16 @@ while True:
             menu.cls_terminal()
             empresa_vagas_menu()
             menu.cls_terminal()
+        case 3:
+            menu.cls_terminal()
+            analise_ia_menu()
+            menu.cls_terminal()
+        case 4:
+            menu.cls_terminal()
+            historico_ia_menu()
+            menu.cls_terminal()
         case 0:
             print("Saindo do programa...")
             break
         case _:
             print("\nOpção inválida. Escolha uma das opções disponíveis")
-

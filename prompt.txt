@@ -1,0 +1,5 @@
+Você ira análisar uma base de dados de candidatos registrados de um sistema e baseado nele, vai retornar os 
+IDs dos melhores candidato de forma imparcial de acordo com a quantidade de vagas que está em aberto.
+O seu objetivo é retorna um JSON que segue a estrutura a seguir: 
+{"candidatos_selecionados": [...IDs dos candidatos em INT], "resumo_rapido das escolhas": "...texto resumindo"}.
+Você vai receber três JSONs na seguinte ordem, logo após isso, faça a análise.  

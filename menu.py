@@ -37,8 +37,8 @@ def options_main_menu():
     """
     print("1 - Gerenciar Candidatos.")
     print("2 - Gerenciar Parâmetros de Vaga.")
-    print("3 - Processo de análise de vagas para candidatos (AI).")
-    #Ver Historico da IA
+    print("3 - Processar vagas para candidatos (AI).")
+    print("4 - Visualizar Histórico de Resultados.")
     print("0 - Fechar aplicativo.")
 
 def options_candidatos_menu():
@@ -53,10 +53,21 @@ def options_candidatos_menu():
     print("0 - Voltar ao menu principal.")
 
 def options_empresa_vagas_menu():
+    """
+    Menu com opções para gerenciar empresa e candidatos.
+    """
     print("1 - Ler Dados e Ramos Empresariais.")
     print("2 - Definir Dados e Ramos Empresariais.")
     print("3 - Ver Padrões de Vaga em aberto.")
     print("4 - Criar Padrão de Vaga.")
     print("5 - Atualizar Padrão de Vaga.")
     print("6 - Deletar Padrão de Vaga.")
-    print("0 - Voltar ao menu Principal. ")
+    print("0 - Voltar ao menu Principal.")
+
+def options_historico_menu():
+    """
+    Menu com opções para visualizar histórico anteriores.
+    """
+    print("1 - Visualizar Histórico de Resultados.")
+    print("2 - Deletar Resultados Anteriores.")
+    print("0 - Voltar ao menu Principal.")
