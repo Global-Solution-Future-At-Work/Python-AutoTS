@@ -693,6 +693,7 @@ def historico_ia_menu():
                     for j in i["candidatos_selecionados"]:
                         cand_selecionados += f"{j}; "
                     print(f"ID: {i["id"]}")
+                    print(f"DESCRIÇÃO VAGA: {i["descricao_requisitos"]}")
                     print(f"CANDIDATOS SELECIONADOS: {cand_selecionados}")
                     print(f"RESUMO DA ANÁLISE:\n{i["resumo_analise"]}")
                     print("===============================")
