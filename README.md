@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Recrutamento com IA 🤖
+#AutoTS - Sistema de Gerenciamento de Recrutamento com IA 🤖
 
 Este projeto é um sistema de console (CLI) em Python que atua como uma ferramenta de rastreamento de candidatos (ATS - Applicant Tracking System) simplificada.
 
@@ -11,7 +11,17 @@ Este projeto foi desenvolvido com foco em dois **Objetivos de Desenvolvimento Su
 -   **🎯 ODS 10 (Redução das Desigualdades):** O núcleo do sistema busca promover a **igualdade de oportunidades** no acesso ao emprego. Ao usar a IA para uma análise de perfil baseada puramente em dados (habilidades, experiências, projetos), o sistema é projetado para ser **imparcial e justo**, mitigando vieses humanos inconscientes que podem ocorrer em processos seletivos tradicionais.
     
 -   **💡 ODS 9 (Indústria, Inovação e Infraestrutura):** O projeto aplica **inovação** (Inteligência Artificial generativa) a um processo de negócios tradicional (Recursos Humanos). Ele moderniza a infraestrutura de contratação e fomenta o uso de novas tecnologias para criar soluções mais eficientes e justas na indústria.
-    
+
+----------
+
+## 👥 Integrantes
+
+| Nome                         | RM      |
+|------------------------------|---------|
+| Azor Tartuce                 | 563995  |
+| Daniel Oliveira de Souza     | 566284  |
+| Lucas de Almeida Pires       | 562757  |
+
 
 ----------
 
