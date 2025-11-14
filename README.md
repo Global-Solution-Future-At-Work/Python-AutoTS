@@ -1,4 +1,4 @@
-#AutoTS - Sistema de Gerenciamento de Recrutamento com IA 🤖
+## AutoTS - Sistema de Gerenciamento de Recrutamento com IA 🤖
 
 Este projeto é um sistema de console (CLI) em Python que atua como uma ferramenta de rastreamento de candidatos (ATS - Applicant Tracking System) simplificada.
 
@@ -22,6 +22,8 @@ Este projeto foi desenvolvido com foco em dois **Objetivos de Desenvolvimento Su
 | Daniel Oliveira de Souza     | 566284  |
 | Lucas de Almeida Pires       | 562757  |
 
+
+Link do GitHub: https://github.com/Global-Solution-Future-At-Work/Python-AutoTS
 
 ----------
 
