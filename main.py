@@ -108,7 +108,7 @@ def candidatos_menu():
                     continue
 
                 nome = input("Insira o nome do candidato: ")
-                foto = input("Insira a URL do candidato: ")
+                foto = input("Insira a URL da foto do candidato: ")
                 cargo = input("Insira o cargo atual do candidato: ")
                 resumo = input("Insira o resumo do candidato: ")
                 localizacao = input("Insira a localização do candidato: ")
@@ -229,7 +229,7 @@ def candidatos_menu():
                     else:
                         nome = input(f"Atual: {candidato["nome"]} -> Insira um nome para atualizar. Aperte ENTER sem digitar para não atualizar: ")
                         nome = None if nome == "" else nome
-                        foto = input(f"Atual: {candidato["foto"]} -> Insira uma foto para atualizar. Aperte ENTER sem digitar para não atualizar: ")
+                        foto = input(f"Atual: {candidato["foto"]} -> Insira uma URL de foto para atualizar. Aperte ENTER sem digitar para não atualizar: ")
                         foto = None if foto == "" else foto
                         cargo = input(f"Atual: {candidato["cargo"]} -> Insira um cargo para atualizar. Aperte ENTER sem digitar para não atualizar: ")
                         cargo = None if cargo == "" else cargo
