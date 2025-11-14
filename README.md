@@ -152,7 +152,7 @@ O projeto é modular e busca separar as responsabilidades:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/Global-Solution-Future-At-Work/Python-AutoTS
+    git clone https://github.com/Global-Solution-Future-At-Work/Python-AutoTS.git
     cd Python-AutoTS
     ```
     
