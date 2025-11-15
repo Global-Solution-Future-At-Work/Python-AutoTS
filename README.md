@@ -25,6 +25,8 @@ Este projeto foi desenvolvido com foco em dois **Objetivos de Desenvolvimento Su
 
 Link do GitHub: https://github.com/Global-Solution-Future-At-Work/Python-AutoTS
 
+Link do Vídeo de Demonstração: https://youtu.be/ueUEZpuMLJU
+
 ----------
 
 ## 🚀 Funcionalidades Principais
